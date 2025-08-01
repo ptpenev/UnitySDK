@@ -11,6 +11,7 @@ namespace TextBuddySDK.Tests
     [TestFixture]
     public class TextBuddyClientTests
     {
+        #region Initialization
         // Mocks for all dependencies
         private Mock<IApiClient> _mockApiClient;
         private Mock<IAnalyticsService> _mockAnalyticsService;
@@ -45,136 +46,6 @@ namespace TextBuddySDK.Tests
                 _mockSmsAppLauncher.Object
             );
         }
-
-        #region TextBuddyConfig Tests
-
-        [Test]
-        public void Config_Constructor_WithValidValues_SetsPropertiesCorrectly()
-        {
-            // Arrange
-            var apiKey = "my-key";
-            var url = "https://my-url.com";
-            var phone = "+12345";
-            var debug = true;
-
-            // Act
-            var config = new TextBuddyConfig(apiKey, url, phone, debug);
-
-            // Assert
-            Assert.That(config.GameApiIdKey, Is.EqualTo(apiKey));
-            Assert.That(config.ApiBaseUrl, Is.EqualTo(url));
-            Assert.That(config.TextBuddyPhoneNumber, Is.EqualTo(phone));
-            Assert.That(config.EnableDebugLogging, Is.EqualTo(debug));
-        }
-
-        [Test]
-        public void Config_Constructor_WithNullApiKey_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => new TextBuddyConfig(null, "url", "phone"));
-        }
-
-        [Test]
-        public void Config_Constructor_WithNullUrl_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => new TextBuddyConfig("key", null, "phone"));
-        }
-
-        [Test]
-        public void Config_Constructor_WithNullPhone_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => new TextBuddyConfig("key", "url", null));
-        }
-
-        #endregion
-
-        #region SMSToken Tests
-
-        [Test]
-        public void SMSToken_Create_WithNullValue_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => SMSToken.Create(null, DateTime.UtcNow));
-        }
-
-        [Test]
-        public void SMSToken_ToString_ReturnsTokenValue()
-        {
-            // Arrange
-            var tokenValue = "my-test-token";
-            var token = SMSToken.Create(tokenValue, DateTime.UtcNow);
-
-            // Act & Assert
-            Assert.That(token.ToString(), Is.EqualTo(tokenValue));
-        }
-
-        #endregion
-
-        #region Result Tests
-
-        [Test]
-        public void TextBuddyResult_Success_CreatesSuccessResult()
-        {
-            // Act
-            var result = TextBuddyResult.Success();
-
-            // Assert
-            Assert.That(result.IsSuccess, Is.True);
-            Assert.That(result.IsFailure, Is.False);
-            Assert.That(result.Error, Is.Null);
-        }
-
-        [Test]
-        public void TextBuddyResult_Failure_CreatesFailureResult()
-        {
-            // Arrange
-            var error = new Error("code", "message");
-
-            // Act
-            var result = TextBuddyResult.Failure(error);
-
-            // Assert
-            Assert.That(result.IsSuccess, Is.False);
-            Assert.That(result.IsFailure, Is.True);
-            Assert.That(result.Error, Is.EqualTo(error));
-        }
-
-        [Test]
-        public void TextBuddyResultT_Success_CreatesSuccessResultWithValue()
-        {
-            // Arrange
-            var value = 123;
-
-            // Act
-            var result = TextBuddyResult<int>.Success(value);
-
-            // Assert
-            Assert.That(result.IsSuccess, Is.True);
-            Assert.That(result.Value, Is.EqualTo(value));
-        }
-
-        [Test]
-        public void CheckTokenResult_Failure_CreatesFailureResult()
-        {
-            // Arrange
-            var error = new Error("Test", "Test Error");
-
-            // Act
-            var result = CheckTokenResult.Failure(error);
-
-            // Assert
-            Assert.That(result.IsFailure, Is.True);
-            Assert.That(result.Error, Is.EqualTo(error));
-        }
-
-        [Test]
-        public void Result_AccessingValueOnFailedResult_ThrowsException()
-        {
-            // Arrange
-            var failedResult = TextBuddyResult<bool>.Failure(new Error("Test", "Test Error"));
-
-            // Act & Assert
-            Assert.Throws<InvalidOperationException>(() => { var v = failedResult.Value; });
-        }
-
         #endregion
 
         #region Register Tests

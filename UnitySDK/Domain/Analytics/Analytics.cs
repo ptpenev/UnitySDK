@@ -19,7 +19,7 @@
     /// In the real SDK, this might send data to a specific analytics backend.
     /// For this example, it will just log to the console if debug logging is enabled.
     /// </summary>
-    internal sealed class DefaultAnalyticsService : IAnalyticsService
+    public sealed class DefaultAnalyticsService : IAnalyticsService
     {
         private readonly bool _enableDebugLogging;
         private readonly string _gameApiIdKey;

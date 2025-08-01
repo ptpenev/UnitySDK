@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Runtime.CompilerServices;
+using System.Text;
 using TextBuddySDK.Domain.Results;
 using TextBuddySDK.Domain.ValueObjects;
 
@@ -20,17 +21,30 @@ namespace TextBuddySDK.Infrastructure
     /// This class is responsible for all communication with the TextBuddy backend API.
     /// It implements the IApiClient interface.
     /// </summary>
-    internal sealed class ApiClient : IApiClient
+
+    public sealed class ApiClient : IApiClient
     {
         private readonly HttpClient _httpClient;
         private readonly string _gameApiIdKey;
         private readonly bool _enableDebugLogging;
 
+        /// <summary>
+        /// Public constructor for production use.
+        /// </summary>
         public ApiClient(string apiBaseUrl, string gameApiIdKey, bool enableDebugLogging)
+            : this(new HttpClient { BaseAddress = new Uri(apiBaseUrl) }, gameApiIdKey, enableDebugLogging)
         {
-            _httpClient = new HttpClient { BaseAddress = new System.Uri(apiBaseUrl) };
+            // This constructor calls the internal one below, setting up a real HttpClient.
+            // We can add default headers here that apply to all requests.
             _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+        }
 
+        /// <summary>
+        /// Public constructor for testing, allowing injection of a mocked HttpClient.
+        /// </summary>
+        public ApiClient(HttpClient httpClient, string gameApiIdKey, bool enableDebugLogging)
+        {
+            _httpClient = httpClient;
             _gameApiIdKey = gameApiIdKey;
             _enableDebugLogging = enableDebugLogging;
         }
@@ -43,6 +57,8 @@ namespace TextBuddySDK.Infrastructure
             var requestBody = $"{{\"verificationCode\":\"{verificationCode}\"}}";
             var content = new StringContent(requestBody, Encoding.UTF8, "application/json");
 
+            // In a real implementation, you would need a way to send requests without the player token.
+            // For now, let's assume PostAsync handles it.
             var response = await PostAsync("/tokens/exchange", content);
 
             if (!response.IsSuccessStatusCode)
@@ -50,6 +66,8 @@ namespace TextBuddySDK.Infrastructure
                 return SmsTokenResult.Failure(new Error("ApiError", $"Failed to get SMS token. Status: {response.StatusCode}"));
             }
 
+            // In a real app, we should deserialize the response.
+            // For testing, we just need to know the call succeeded.
             string fakeTokenValue = "fake-sms-token-" + Guid.NewGuid().ToString();
             DateTime fakeExpiration = DateTime.UtcNow.AddDays(30);
 
@@ -103,9 +121,8 @@ namespace TextBuddySDK.Infrastructure
             return CheckTokenResult.Success(true);
         }
 
-        // Helper methods for making requests
-
-        private async Task<HttpResponseMessage> PostAsync(string url, HttpContent content, string playerToken = null)
+        // Helper methods
+        internal async Task<HttpResponseMessage> PostAsync(string url, HttpContent content, string playerToken = null)
         {
             using (var requestMessage = new HttpRequestMessage(HttpMethod.Post, url))
             {
@@ -122,7 +139,7 @@ namespace TextBuddySDK.Infrastructure
             }
         }
 
-        private async Task<HttpResponseMessage> GetAsync(string url, string playerToken = null)
+        internal async Task<HttpResponseMessage> GetAsync(string url, string playerToken = null)
         {
             using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, url))
             {
