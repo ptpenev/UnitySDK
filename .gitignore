@@ -1,8 +1,2 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
-
-/.vs/TextBuddySDK/CopilotIndices/17.14.939.21063
-/.vs
-/bin/Debug/net8.0
-/obj
+/TextBuddySDK.Tests/bin
+/TextBuddySDK.Tests/obj
