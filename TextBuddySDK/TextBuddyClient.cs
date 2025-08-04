@@ -28,7 +28,8 @@ namespace TextBuddySDK
         public TextBuddyClient(TextBuddyConfig config, ISmsAppLauncher smsAppLauncher = null)
         {
             _config = config ?? throw new ArgumentNullException(nameof(config));
-            _apiClient = new ApiClient(config.ApiBaseUrl, config.GameApiIdKey, config.EnableDebugLogging);
+            _apiClient = new FakeApiClient(config.ApiBaseUrl, config.GameApiIdKey, config.EnableDebugLogging);
+            //_apiClient = new ApiClient(config.ApiBaseUrl, config.GameApiIdKey, config.EnableDebugLogging);
             _analyticsService = new DefaultAnalyticsService(config.GameApiIdKey, config.EnableDebugLogging);
             _smsAppLauncher = smsAppLauncher ?? new UnitySmsAppLauncher();
         }
