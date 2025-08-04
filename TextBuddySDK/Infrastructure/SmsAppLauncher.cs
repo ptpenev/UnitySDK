@@ -1,6 +1,4 @@
-﻿// TextBuddySDK/Infrastructure/SmsAppLauncher.cs
-
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TextBuddySDK.Infrastructure
 {

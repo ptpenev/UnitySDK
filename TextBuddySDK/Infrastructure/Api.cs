@@ -1,5 +1,6 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using TextBuddySDK.Domain.Results;
 using TextBuddySDK.Domain.ValueObjects;
 
@@ -32,7 +33,7 @@ namespace TextBuddySDK.Infrastructure
         /// Public constructor for production use.
         /// </summary>
         public ApiClient(string apiBaseUrl, string gameApiIdKey, bool enableDebugLogging)
-            : this(new HttpClient { BaseAddress = new Uri(apiBaseUrl) }, gameApiIdKey, enableDebugLogging)
+            : this(new HttpClient { BaseAddress = new System.Uri(apiBaseUrl) }, gameApiIdKey, enableDebugLogging)
         {
             // This constructor calls the internal one below, setting up a real HttpClient.
             // We can add default headers here that apply to all requests.
@@ -57,8 +58,7 @@ namespace TextBuddySDK.Infrastructure
             var requestBody = $"{{\"verificationCode\":\"{verificationCode}\"}}";
             var content = new StringContent(requestBody, Encoding.UTF8, "application/json");
 
-            // In a real implementation, you would need a way to send requests without the player token.
-            // For now, let's assume PostAsync handles it.
+            // In a real implementation, we would need a way to send requests without the player token.
             var response = await PostAsync("/tokens/exchange", content);
 
             if (!response.IsSuccessStatusCode)
@@ -68,8 +68,8 @@ namespace TextBuddySDK.Infrastructure
 
             // In a real app, we should deserialize the response.
             // For testing, we just need to know the call succeeded.
-            string fakeTokenValue = "fake-sms-token-" + Guid.NewGuid().ToString();
-            DateTime fakeExpiration = DateTime.UtcNow.AddDays(30);
+            string fakeTokenValue = "fake-sms-token-" + System.Guid.NewGuid().ToString();
+            System.DateTime fakeExpiration = System.DateTime.UtcNow.AddDays(30);
 
             var smsToken = SMSToken.Create(fakeTokenValue, fakeExpiration);
             return SmsTokenResult.Success(smsToken);

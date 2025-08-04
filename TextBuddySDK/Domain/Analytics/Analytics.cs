@@ -1,4 +1,7 @@
-﻿namespace TextBuddySDK.Domain.Analytics
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace TextBuddySDK.Domain.Analytics
 {
     /// <summary>
     /// Defines the contract for an analytics service.

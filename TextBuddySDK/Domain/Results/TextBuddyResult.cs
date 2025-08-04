@@ -53,7 +53,7 @@
         /// </summary>
         public TValue Value => IsSuccess
             ? _value
-            : throw new InvalidOperationException("Cannot access the value of a failed result.");
+            : throw new System.InvalidOperationException("Cannot access the value of a failed result.");
 
         protected TextBuddyResult(TValue value, bool isSuccess, Error error)
             : base(isSuccess, error)

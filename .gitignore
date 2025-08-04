@@ -1,2 +1,5 @@
 /TextBuddySDK.Tests/bin
 /TextBuddySDK.Tests/obj
+/TextBuddySDK/.vs
+/TextBuddySDK/bin
+/TextBuddySDK/obj

@@ -41,13 +41,13 @@
         public TextBuddyConfig(string gameApiIdKey, string apiBaseUrl, string textBuddyPhoneNumber, bool enableDebugLogging = false)
         {
             if (string.IsNullOrWhiteSpace(gameApiIdKey))
-                throw new ArgumentNullException(nameof(gameApiIdKey), "Game API Key cannot be null or empty.");
+                throw new System.ArgumentNullException(nameof(gameApiIdKey), "Game API Key cannot be null or empty.");
 
             if (string.IsNullOrWhiteSpace(apiBaseUrl))
-                throw new ArgumentNullException(nameof(apiBaseUrl), "API Base URL cannot be null or empty.");
+                throw new System.ArgumentNullException(nameof(apiBaseUrl), "API Base URL cannot be null or empty.");
 
             if (string.IsNullOrWhiteSpace(textBuddyPhoneNumber))
-                throw new ArgumentNullException(nameof(textBuddyPhoneNumber), "TextBuddy Phone Number cannot be null or empty.");
+                throw new System.ArgumentNullException(nameof(textBuddyPhoneNumber), "TextBuddy Phone Number cannot be null or empty.");
 
             GameApiIdKey = gameApiIdKey;
             ApiBaseUrl = apiBaseUrl;

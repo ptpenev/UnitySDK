@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="NUnit" Version="4.3.2" />
     <PackageReference Include="NUnit.Analyzers" Version="4.9.2">
@@ -22,17 +22,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UnitySDK\TextBuddySDK.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Using Include="NUnit.Framework" />
+    <ProjectReference Include="..\TextBuddySDK\TextBuddySDK.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\Program Files\Unity\Hub\Editor\6000.1.13f1\Editor\Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files\Unity\Hub\Editor\6000.1.13f1\Editor\Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="NUnit.Framework" />
   </ItemGroup>
 
 </Project>

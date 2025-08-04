@@ -15,19 +15,19 @@
         /// <summary>
         /// The timestamp when this token expires. After this time, it's no longer valid.
         /// </summary>
-        public DateTime Expiration { get; }
+        public System.DateTime Expiration { get; }
 
         /// <summary>
         /// Checks if the token is expired.
         /// </summary>
-        public bool IsExpired => DateTime.UtcNow >= Expiration;
+        public bool IsExpired => System.DateTime.UtcNow >= Expiration;
 
         /// <summary>
         /// Private constructor to enforce creation through the factory method.
         /// </summary>
         /// <param name="value">The token string.</param>
         /// <param name="expiration">The expiration date of the token.</param>
-        private SMSToken(string value, DateTime expiration)
+        private SMSToken(string value, System.DateTime expiration)
         {
             Value = value;
             Expiration = expiration;
@@ -40,12 +40,12 @@
         /// <param name="value">The token string received from the API.</param>
         /// <param name="expiration">The expiration date received from the API.</param>
         /// <returns>A new SMSToken instance.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if the token value is null or empty.</exception>
-        public static SMSToken Create(string value, DateTime expiration)
+        /// <exception cref="System.ArgumentNullException">Thrown if the token value is null or empty.</exception>
+        public static SMSToken Create(string value, System.DateTime expiration)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
-                throw new ArgumentNullException(nameof(value), "SMS Token value cannot be null or empty.");
+                throw new System.ArgumentNullException(nameof(value), "SMS Token value cannot be null or empty.");
             }
 
             return new SMSToken(value, expiration);

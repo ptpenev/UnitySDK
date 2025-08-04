@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36327.8 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextBuddySDK", "TextBuddySDK.csproj", "{B4A965AB-B70F-4CE7-9A78-D390B6E5C237}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextBuddySDK.Tests", "..\TextBuddySDK.Tests\TextBuddySDK.Tests.csproj", "{91C53CB7-2508-4039-9DF4-320B78438C22}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B4A965AB-B70F-4CE7-9A78-D390B6E5C237}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4A965AB-B70F-4CE7-9A78-D390B6E5C237}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4A965AB-B70F-4CE7-9A78-D390B6E5C237}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4A965AB-B70F-4CE7-9A78-D390B6E5C237}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91C53CB7-2508-4039-9DF4-320B78438C22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91C53CB7-2508-4039-9DF4-320B78438C22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91C53CB7-2508-4039-9DF4-320B78438C22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91C53CB7-2508-4039-9DF4-320B78438C22}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F289EB08-E4F6-4306-AD7E-BD0E1EEA1544}
+	EndGlobalSection
+EndGlobal

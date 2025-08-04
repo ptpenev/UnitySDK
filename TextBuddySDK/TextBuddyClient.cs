@@ -1,9 +1,12 @@
-﻿using TextBuddySDK.Infrastructure;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web;
 using TextBuddySDK.Configuration;
 using TextBuddySDK.Domain.Analytics;
 using TextBuddySDK.Domain.Results;
 using TextBuddySDK.Domain.ValueObjects;
-using System.Web;
+using TextBuddySDK.Infrastructure;
 
 namespace TextBuddySDK
 {
@@ -148,7 +151,7 @@ namespace TextBuddySDK
                 {
                     throw new ArgumentNullException(code, "Verification code was not found.");
                 }
-                
+
                 return code;
             }
             catch
