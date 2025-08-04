@@ -1,0 +1,77 @@
+name: Build and Release SDK on Push to Release Branch
+
+# This workflow executes the following steps on push to the 'release' branch,
+# but only if files inside the 'TextBuddySDK/' directory have changed.
+on:
+  push:
+    branches:
+      - 'release'
+    paths:
+      - 'TextBuddySDK/**'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Check out the repository's code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Set up .NET environment
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x' # Use a version compatible with your project
+
+      # 3. Build the SDK DLL in Release mode
+      - name: Build SDK DLL
+        run: dotnet build TextBuddySDK/TextBuddySDK.csproj --configuration Release
+
+      # 4. Prepare the Unity project for packaging
+      - name: Prepare Unity Project
+        run: |
+          DLL_PATH="TextBuddySDK/bin/Release/netstandard2.1/TextBuddySDK.dll"
+          UNITY_PLUGIN_PATH="UnityPackageProject/Assets/Plugins/TextBuddySDK"
+          
+          echo "Copying $DLL_PATH to $UNITY_PLUGIN_PATH"
+          cp $DLL_PATH $UNITY_PLUGIN_PATH/TextBuddySDK.dll
+
+      # 5. Use GameCI action to create the .unitypackage
+      - name: Build .unitypackage
+        uses: game-ci/unity-builder@v2
+        with:
+          projectPath: UnityPackageProject
+          customMethod: PackageExporter.ExportPackage
+          unityVersion: 6000.1.13f1
+
+      # 6. Create a unique Release name based on the date and commit hash
+      - name: Generate Release Name
+        id: generate_name
+        run: echo "release_name=Release - $(date +'%Y-%m-%d')-${{ github.sha }}" >> $GITHUB_ENV
+
+      # 7. Create a new GitHub Release
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # Use the dynamic name we just created
+          tag_name: ${{ env.release_name }}
+          release_name: ${{ env.release_name }}
+          body: |
+            Automated release triggered by push to the release branch.
+            Commit: ${{ github.sha }}
+          draft: false
+          prerelease: true # Mark as pre-release since it's not a formal version
+
+      # 8. Upload the .unitypackage to the new Release
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./UnityPackageProject/TextBuddySDK.unitypackage
+          asset_name: TextBuddySDK.unitypackage
+          asset_content_type: application/octet-stream
