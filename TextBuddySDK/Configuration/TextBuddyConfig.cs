@@ -4,7 +4,7 @@
     /// Holds the configuration settings for the TextBuddy SDK.
     /// An instance of this class is required to initialize the main TextBuddy client.
     /// </summary>
-    public sealed class TextBuddyConfig     // Not inheritable
+    public sealed class TextBuddyConfig     // Not inheritable.
     {
         /// <summary>
         /// The API key for the game, provided by the TextBuddy service.

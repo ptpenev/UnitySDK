@@ -1,5 +1,4 @@
 using Moq;
-using NUnit.Framework;
 using TextBuddySDK.Configuration;
 using TextBuddySDK.Domain.Analytics;
 using TextBuddySDK.Domain.Results;
